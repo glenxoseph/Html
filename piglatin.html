@@ -1,43 +1,43 @@
 <html>
-	<head>
-    <script>
-      function Translate() {
-          var Input = document.getElementById("Input").value;
-          var LetterArray = Input.toLowerCase().split("");
-          var FirstLetter = LetterArray[0].toLowerCase();
-          LetterArray[0] = LetterArray[0].toLowerCase();
-          var Output;
-					var num = LetterArray.length;
+<head>
+	<script>
+	function Translate() {
+		var Input = document.getElementById("Input").value;
+		var LetterArray = Input.toLowerCase().split("");
+		var FirstLetter = LetterArray[0].toLowerCase();
+		LetterArray[0] = LetterArray[0].toLowerCase();
+		var Output;
+		var num = LetterArray.length;
 
-          if(FirstLetter == "a" || FirstLetter == "e" || FirstLetter == "i" || FirstLetter == "o" || FirstLetter == "u") {
-              Output = LetterArray.join("") + "way"
-              Output = Output.toLowerCase();
-              textbox = document.getElementById("Output");
-              textbox.value = Output;
-          } else {
-            var Deleted = new Array(0);
-            for (let step = 0; step < num; step++) {
-              FirstLetter = LetterArray[0].toLowerCase();
-              if(FirstLetter == "a" || FirstLetter == "e" || FirstLetter == "i" || FirstLetter == "o" || FirstLetter == "u") {
-                break;
-              }
-              Deleted.push(FirstLetter);
-              LetterArray.splice(0, 1);
-            }
-            LetterArray = LetterArray.concat(Deleted);
-            Output = LetterArray.join("") + "ay";
-            Output = Output.toLowerCase();
-            textbox = document.getElementById("Output");
-            textbox.value = Output;
-          }
-      }
+		if(FirstLetter == "a" || FirstLetter == "e" || FirstLetter == "i" || FirstLetter == "o" || FirstLetter == "u") {
+			Output = LetterArray.join("") + "way"
+			Output = Output.toLowerCase();
+			textbox = document.getElementById("Output");
+			textbox.value = Output;
+		} else {
+			var Deleted = new Array(0);
+			for (let step = 0; step < num; step++) {
+				FirstLetter = LetterArray[0].toLowerCase();
+				if(FirstLetter == "a" || FirstLetter == "e" || FirstLetter == "i" || FirstLetter == "o" || FirstLetter == "u") {
+					break;
+				}
+				Deleted.push(FirstLetter);
+				LetterArray.splice(0, 1);
+			}
+			LetterArray = LetterArray.concat(Deleted);
+			Output = LetterArray.join("") + "ay";
+			Output = Output.toLowerCase();
+			textbox = document.getElementById("Output");
+			textbox.value = Output;
+		}
+	}
 
-    </script>
-	</head>
-	<body>
-		<H1>Translate to Pig Latin</H1>
-		Enter the English Word: <input id="Input">
-    <p> Pig-Latin Translation: <input id="Output">
-		<p> <button id="Convert" onclick="Translate()">Translate</button>
-	</body>
+	</script>
+</head>
+<body>
+	<H1>Translate to Pig Latin</H1>
+	Enter the English Word: <input id="Input">
+	<p> Pig-Latin Translation: <input id="Output">
+	<p> <button id="Convert" onclick="Translate()">Translate</button>
+</body>
 </html>
