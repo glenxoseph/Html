@@ -1,0 +1,74 @@
+<html>
+<head>
+  <script>
+    function select() {
+      var selected = document.getElementById("selected");
+      var menu = document.getElementById("menu");
+      var element = menu.options[menu.selectedIndex].text;
+      menu.remove(menu.selectedIndex);
+      selected.options.add(new Option (element));
+    }
+
+    function remove() {
+      var selected = document.getElementById("selected");
+      var menu = document.getElementById("menu");
+      var element = selected.options[selected.selectedIndex].text;
+      selected.remove(selected.selectedIndex);
+      menu.options.add(new Option (element));
+    }
+
+    function print() {
+      var selected = new Array();
+      var html = document.getElementById('selected');
+      for (i = 0; i < html.options.length; i++) {
+        selected[i] = html.options[i].text;
+      }
+      var output = "Please make me a pizza with: \n";
+      for (i = 0; i < selected.length; i++) {
+        output = output + " ";
+        output = output + selected[i];
+        output = output + "\n";
+      }
+      output = output + "Thanks!"
+      confirm(output);
+    }
+  </script>
+</head>
+<body>
+  <H1>Pizza Ordering App</H1>
+
+  <style>
+    .oneline {
+      width: 100px;
+      height: 10px;
+      display: inline-block;
+    }
+  </style>
+  <div class="oneline">
+    <form>
+      <select name = "menu" id="menu" size="6">
+        <option value = "pine">Pineapple</option>
+        <option value = "anch">Anchovies</option>
+        <option value = "mush">Mushroom</option>
+        <option value = "meet">Meatball</option>
+      </select>
+    </form>
+  </div>
+
+  <div class="oneline">
+    <button id="Select" onclick="select()"">Select -></button>
+    <button id="Remove" onclick="remove()"><- Remove</button>
+  </div>
+
+  <div class="oneline">
+    <form>
+      <select name = "selected" id="selected" size="6">
+        <option value = "pep">Green Pepper</option>
+        <option value = "chee">Extra Cheese</option>
+      </select>
+    </form>
+  </div>
+
+  <p> <button id="Order" onclick="print()">Fax Order</button>
+  </body>
+  </html>
