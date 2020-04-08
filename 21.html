@@ -1,0 +1,124 @@
+<html>
+	<head>
+		<script>
+      var cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+      var dealers = new Array(0);
+      var yours = new Array(0);
+      var dealersNum = 0;
+      var yourNum = 0;
+			var finished = 0;
+
+			const sleep = (milliseconds) => {
+			  return new Promise(resolve => setTimeout(resolve, milliseconds))
+			}
+
+      function value(i) {
+        if (i == 0) {
+          return 11;
+        }
+        if (i == 10 || i == 11 || i == 12) {
+          return 10;
+        }
+        if (i >= 1 && 1 <= 9) {
+          return i + 1;
+        }
+      }
+
+      function rand() {
+        var rand = Math.floor(Math.random() * 13);
+        return rand;
+      }
+
+      function dealerHit() {
+        var num = rand();
+        dealersNum = dealersNum + value(num);
+        dealers.push(cards[num]);
+        textbox = document.getElementById("dealer_card");
+        var output = '';
+        for (i = 0; i < dealers.length; i++) {
+          output = output + dealers[i];
+          output = output + " ";
+        }
+				textbox.value = output;
+				numbox = document.getElementById("dealer_total");
+				numbox.value = dealersNum;
+      }
+
+			const dealerHitLoop = async () => {
+				if (finished == 0) {
+					finished = 1;
+					dealerHit();
+					while (dealersNum < 17) {
+						await sleep(500);
+						dealerHit();
+					}
+					result = document.getElementById("result");
+					if (dealersNum > 21) {
+						text = "Dealer's score is now " + dealersNum + ", you win!";
+					}
+					else {
+						if (dealersNum < yourNum) {
+							text = "Dealer's score is now " + dealersNum + ", and your score is now " + yourNum + ", you win!";
+						} else if (yourNum < dealersNum) {
+							text = "Dealer's score is now " + dealersNum + ", and your score is now " + yourNum + ", you lose!";
+						} else {
+							text = "Both of your scores are now " + dealersNum + ", it's a draw!";
+						}
+					}
+					result.innerHTML = text;
+				}
+			}
+
+      function yourHit() {
+				if (finished == 0) {
+					var num = rand();
+	        yourNum = yourNum + value(num);
+	        yours.push(cards[num]);
+	        textbox = document.getElementById("your_card");
+	        var output = '';
+	        for (i = 0; i < yours.length; i++) {
+	          output = output + yours[i];
+	          output = output + " ";
+	        }
+					textbox.value = output;
+					numbox = document.getElementById("your_total");
+					numbox.value = yourNum;
+					result = document.getElementById("result");
+					if (yourNum > 21) {
+						text = "Your score is now " + yourNum + ", you lose!";
+						result.innerHTML = text;
+						finished = 1;
+					}
+				}
+      }
+
+      function init() {
+        dealerHit();
+        yourHit();
+        yourHit();
+      }
+			window.onload = init;
+
+			function refresh() {
+				result.innerHTML = ' ';
+				finished = 0;
+				dealersNum = 0;
+	      yourNum = 0;
+				dealers = [];
+	      yours = [];
+				init();
+			}
+		</script>
+	</head>
+	<body>
+		<H1>Blackjack</H1>
+		Dealer's cards: <input id="dealer_card" size="50">
+		<p> Dealer's total: <input id="dealer_total">
+    <p> Your cards: <input id="your_card" size="50">
+    <p> Your total: <input id="your_total">
+		<p> <button id="me" onclick="yourHit()">Hit Me</button>
+      <button id="deal" onclick="dealerHitLoop()">Hit the Dealer</button>
+      <button id="new" onclick="refresh()">New Deal</button>
+		<p id="result"></p>
+	</body>
+</html>
