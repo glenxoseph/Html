@@ -1,0 +1,129 @@
+<html>
+<head>
+  <script>
+    var src = '';
+    var money = 0;
+    var change = 0;
+
+    function init() {
+      totalZero();
+      printChange();
+    }
+    window.onload = init;
+
+    function plus1() {
+      money++;
+      printMoney();
+    }
+
+    function printMoney() {
+      document.getElementById("total").innerHTML = money;
+    }
+
+    function totalZero() {
+      document.getElementById("total").innerHTML = 0;
+    }
+
+    function printChange() {
+      document.getElementById("change").innerHTML = change;
+    }
+
+    function error() {
+      document.getElementById("error").innerHTML = "Please deposit more money.";
+    }
+
+    function clearError() {
+      document.getElementById("error").innerHTML = "";
+    }
+
+    function changeHere() {
+      change += money;
+      money = 0;
+    }
+
+    function bigmac() {
+      src = document.getElementById("bigmacImage").src;
+      if (money >= 5) {
+        money -= 5;
+        clearError();
+        changeHere();
+        printResult();
+        totalZero();
+        printChange();
+      } else {
+        clearResult();
+        error();
+      }
+    }
+    function fish() {
+      src = document.getElementById("fishImage").src;
+      if (money >= 3) {
+        money -= 3;
+        clearError();
+        changeHere();
+        printResult();
+        totalZero();
+        printChange();
+      } else {
+        clearResult();
+        error();
+      }
+    }
+    function angus() {
+      src = document.getElementById("angusImage").src;
+      if (money >= 7.5) {
+        money -= 7.5;
+        clearError();
+        changeHere();
+        printResult();
+        totalZero();
+        printChange();
+      } else {
+        clearResult();
+        error();
+      }
+    }
+    function printResult() {
+      document.getElementById("result").src = src;
+    }
+    function clearResult() {
+      document.getElementById("result").src = "//:0";
+    }
+  </script>
+</head>
+<body>
+  <H1>Vending Machine</H1>
+
+  <style>
+  .oneline {
+    width: 200px;
+    height: 10px;
+    display: inline-block;
+  }
+  </style>
+  <div class="oneline">
+    <img id="bigmacImage" src="mcdonalds-big-mac.jpg">
+    <p>
+    <button id="bigmac" onclick="bigmac()"">$5.0</button>
+  </div>
+
+  <div class="oneline">
+    <img id="fishImage" src="mcdonalds-double-filet-o-fish.jpg">
+    <p>
+    <button id="fish" onclick="fish()"">$3.0</button>
+  </div>
+
+  <div class="oneline">
+    <img id="angusImage" src="mcdonalds-mighty-angus.jpg">
+    <p>
+    <button id="angus" onclick="angus()"">$7.5</button>
+  </div>
+
+  <p>
+  <button id="plus1" onclick="plus1()"">Drop in $1</button>
+  <p> Total of Money Inserted: $<span id="total"></span>
+  <p> Change Return: $<span id="change"></span>
+  <p> <img id="result" src="//:0">
+  <p> <span id="error" style="color:red"></span>
+  </body>
+  </html>
