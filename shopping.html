@@ -97,7 +97,11 @@
           totalPrice += selectedProducts[j].price * counter[j];
           total += counter[j];
         }
-        text += "--------------------\n--------------------\n" + total + " items ordered\nTotal = $" + totalPrice;
+        if (total == 1) {
+          text += "--------------------\n--------------------\n" + total + " item ordered\nTotal = $" + totalPrice;
+        } else {
+          text += "--------------------\n--------------------\n" + total + " items ordered\nTotal = $" + totalPrice;
+        }
         printText();
       }
     }
