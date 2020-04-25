@@ -1,0 +1,129 @@
+<html>
+<head>
+  <script>
+    class Product {
+      constructor(name, price) {
+        this._name = name;
+        this._price = price;
+      }
+      set name(x) {
+        this._name = x;
+      }
+      get name() {
+        return this._name;
+      }
+      set price(x) {
+        this._price = x;
+      }
+      get price() {
+        return this._price;
+      }
+    }
+
+    var allProducts = [];
+    var selectedProducts = [];
+    var counter = [];
+
+    function addProduct(name, price) {
+      newProduct = new Product(name, price);
+      allProducts.push(newProduct);
+    }
+
+    // add products here!
+    addProduct("iPod", 100);
+    addProduct("iPad", 500);
+    addProduct("iPhone", 900);
+    addProduct("iMac", 2000);
+
+    function init() {
+      for (let i = 0; i < allProducts.length; i++) {
+        var option = document.createElement("option");
+        option.text = allProducts[i].name + " $" + allProducts[i].price;
+        option.value = i;
+        document.getElementById("menu").add(option);
+      }
+    }
+    window.onload = init;
+
+    var text = "";
+    var enable = 1;
+
+    function setText() {
+      var tempText = "";
+      for (let j = 0; j < selectedProducts.length; j++) {
+        tempText += selectedProducts[j].name + ": " + counter[j] + " @ $" + selectedProducts[j].price + " = $" + counter[j] * selectedProducts[j].price + "\n";
+      }
+      text = tempText;
+      printText();
+    }
+
+    function printText() {
+      textbox = document.getElementById("order");
+			textbox.value = text;
+    }
+
+    function add() {
+      if (enable == 1) {
+        var set = 0;
+        var i = document.getElementById("menu").options[document.getElementById("menu").selectedIndex].value;
+        if (selectedProducts.length == 0) {
+          selectedProducts.push(allProducts[i]);
+          counter.push(1);
+        }
+        else {
+          for (let j = 0; j < selectedProducts.length; j++) {
+            if (allProducts[i].name == selectedProducts[j].name) {
+              set = 1;
+              counter[j]++;
+              break;
+            }
+          }
+          if (set == 0) {
+            selectedProducts.push(allProducts[i]);
+            counter.push(1);
+          }
+        }
+        setText();
+        printText();
+      }
+    }
+
+    var totalPrice = 0;
+    var total = 0;
+    function checkout() {
+      if (enable == 1) {
+        enable = 0;
+        for (let j = 0; j < selectedProducts.length; j++) {
+          totalPrice += selectedProducts[j].price * counter[j];
+          total += counter[j];
+        }
+        text += "--------------------\n--------------------\n" + total + " items ordered\nTotal = $" + totalPrice;
+        printText();
+      }
+    }
+
+    function empty() {
+      totalPrice = 0;
+      total = 0;
+      selectedProducts = [];
+      counter = [];
+      enable = 1;
+      text = "";
+      printText();
+    }
+
+  </script>
+</head>
+<body>
+  <H1>Web Shopping Made Easy</H1>
+  <select name = "menu" id="menu" size="1">
+  </select>
+  <button id="add" onclick="add()">Add to Basket</button>
+  <p> <button id="checkout" onclick="checkout()">Checkout</button>
+  <p> <button id="empty" onclick="empty()">Empty Basket</button>
+  <hr>
+  <H2>Your order</H2>
+  <textarea id="order" style="height:200px; width:500px">
+  </textarea>
+  </body>
+  </html>
